@@ -1,13 +1,16 @@
 [tool.poetry]
-name = "deploy-functions-oidc-template"
-version = "1.6.0"
-description = "Cognite Functions template for OIDC projects"
-authors = ["hakon.treider@cognite.com"]
+name = "slack-monitor"
+version = "1.0.0"
+description = "Slack Monitor Service on Cognite Functions template for OIDC projects"
+authors = ["ivan.surif@cognite.com"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 pytest-custom-exit-code = ">=0.3"
 cognite-sdk = ">=6"
+azure-identity = "^1.14.1"
+azure-storage-queue = "^12.7.3"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = ">=7"
