@@ -20,10 +20,21 @@ def handle(data, client, secrets):
         # Instantiate a QueueClient which will be used to create and manipulate the queue
         queue_client = QueueClient.from_connection_string(connect_str, queue_name)
         writer = QueueWriter(connect_str, queue_name)
-        if writer.ensure_queue_exists():
+        queue_query_result = writer.check_if_queue_exists()
+        if queue_query_result[0]:
             print(f'Queue "{queue_name}" exists')
+        elif queue_query_result[1] == 'QueueNotFound':
+            print(f'Provided Queue name "{queue_name}" doesn\'t exist')
+            print(f'Creating Queue')
+            writer.create_queue()
+        elif queue_query_result[1] == 'ResourceNotFoundError':
+            print(f'Resource Not Found error with error code != "QueueNotFound"')
         else:
-            print(f'ABORTING: Provided Queue name "{queue_name}" doesn\'t exist or error when reading from queue')
+            print(f'ABORTING: error when reading from queue. Generic Exception!')
+            print(queue_query_result[1].status_code)
+            print(queue_query_result[1].error_code)
+            print(queue_query_result[1].reason)
+
         
     except:
         pass

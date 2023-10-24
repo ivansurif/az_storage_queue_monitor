@@ -8,8 +8,7 @@ class QueueWriter:
         self.queue_name = queue_name
         # self.ensure_queue_exists()
 
-    def ensure_queue_exists(self):
-        print(self.queue_name)
+    def check_if_queue_exists(self):
         try:
             res = self.queue_client.receive_messages(max_messages = 1)
             for message in res:
@@ -17,22 +16,14 @@ class QueueWriter:
             return True
         except ResourceNotFoundError as e:
             if e.error_code == 'QueueNotFound':
-                print(f'The specified queue "{self.queue_name}" was not found.')
+                return False, 'QueueNotFound'
             else:
-                print(f'Another resource-related error occurred: {e}')
-            return False
+                return False, 'ResourceNotFoundError'
         except Exception as e:
-            print(f'UNCAUGHT EXCEPTION: {e.reason} \nERROR CODE: {e.error_code}')
-            return False
+            return False, e
     
-
-
-        try:
-            self.queue_client.create_queue()
-        except ResourceExistsError:
-            pass  # Queue already exists, so we can safely pass
-        except Exception as e:
-            print(f"An unexpected error occurred during queue creation: {e}")
+    def create_queue(self):
+        res = self.queue_client.create_queue()
 
     def write_message(self, message_content):
         try:
