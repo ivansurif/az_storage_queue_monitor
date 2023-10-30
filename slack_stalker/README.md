@@ -1,15 +1,20 @@
 # Slack Toolbox [1.0]
 
 
-This repository is a set of tools meant leverage Azure features.
+This repository is a set of tools meant to showcase the use of Azure resources.
 
 
-## Slack Stalker WIP
-This tool is designed to alert the user of any new posts made by one or more persons of interest.
+## [Slack] Stalker
+This is an agnostic tool designed to monitor and process activity in messaging systems such as Slack, or any other messaging platform that offers an events API.
 
-It leverages Slack Events API and Event Grid to react to messages posted on Slack.
+It leverages Azure Event Grid custom topics to receive message events, which are stored in Azure Queue Storage. From that point, an Azure Function takes on and processes the messages.
 
-It uses Azure Queue Storage to create and store a message that contains information about the posted file.
+The repo does not get into Slack-specific API connection. It is a general purpose design which accepts a message payload in an Event Grid custom topic, queues it, and processes it.
+
+Processing use cases could be many:
+- alerting the user that a person of interest posted a message in a public channel.
+- producing statistics about topics discussed and activity.
+- analyzing messages using LLM to automatically propose updates to documentation, detecting hot topics and matters of interest to the user.
 
 #### Data Object
 The function expects a data object which stores and makes available to the function the configuration parameters necessary for it to run. The parameters are the below:
@@ -26,4 +31,3 @@ The function expects a data object which stores and makes available to the funct
 #### Dynamics
 - The function receives the name of the queue to write to as a parameter in the `data` object.
 - It checks if the queue exists.
-- If it doesn't, it attempts to create it.

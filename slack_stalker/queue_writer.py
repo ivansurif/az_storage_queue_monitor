@@ -1,6 +1,6 @@
 from azure.storage.queue import QueueClient, QueueServiceClient
 from azure.core.exceptions import ResourceNotFoundError
-
+import base64, json
 
 class QueueWriter:
     def __init__(self, connection_string, queue_name):
@@ -12,7 +12,12 @@ class QueueWriter:
         try:
             res = self.queue_client.receive_messages(max_messages = 1)
             for message in res:
-                print(message.content)
+                decoded_string = base64.b64decode(message.content).decode('utf-8')
+                # For better formatting, load as JSON and dump with indent
+                decoded_json = json.loads(decoded_string)
+                pretty_json = json.dumps(decoded_json, indent=4)
+                print(pretty_json)
+
             return True
         except ResourceNotFoundError as e:
             if e.error_code == 'QueueNotFound':

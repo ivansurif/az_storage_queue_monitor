@@ -50,7 +50,7 @@ def get_local_client():
 # client = get_local_client(env=env)
 client = get_local_client()
 secrets = {}
-data: Dict[str, Any] = {'queue_name':'mrt'}
+data: Dict[str, Any] = {'queue_name':'selectedusermessages'}
 
 # start monitoring
 tracemalloc.start()

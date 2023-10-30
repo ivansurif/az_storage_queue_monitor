@@ -26,7 +26,7 @@ def handle(data, client, secrets):
         elif queue_query_result[1] == 'QueueNotFound':
             print(f'Provided Queue name "{queue_name}" doesn\'t exist')
             print(f'Creating Queue')
-            writer.create_queue()
+            #writer.create_queue()
         elif queue_query_result[1] == 'ResourceNotFoundError':
             print(f'Resource Not Found error with error code != "QueueNotFound"')
         else:
