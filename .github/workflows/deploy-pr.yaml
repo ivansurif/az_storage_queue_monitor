@@ -45,5 +45,5 @@ jobs:
         run: PYTHONPATH=${{ matrix.function }} poetry run pytest tests/${{ matrix.function }} -m "unit" --suppress-no-test-exit-code
 
       # If your repo decides to rename 'common', remember to update below:
-      - name: Test util/shared code
-        run: poetry run pytest tests/common -m "unit" --suppress-no-test-exit-code
+      #- name: Test util/shared code
+      #  run: poetry run pytest tests/common -m "unit" --suppress-no-test-exit-code

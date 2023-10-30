@@ -9,7 +9,7 @@ jobs:
     uses: "./.github/workflows/generate-matrix.yaml"
     with:
       deploy_folders: "example_function1, example_function2"
-      trigger_deploy_all_folders: "common"
+      # trigger_deploy_all_folders: "common"
 
   deploy:
     needs: generate-matrix
@@ -100,7 +100,7 @@ jobs:
           # - function_config.yaml
           # - function_config_[environment].yaml
           data_set_id: ${{ steps.extract_params.outputs.data_set_id }}
-          common_folder: ${{ steps.extract_params.outputs.common_folder }}
+          #common_folder: ${{ steps.extract_params.outputs.common_folder }}
           function_deploy_timeout: ${{ steps.extract_params.outputs.function_deploy_timeout }}
           post_deploy_cleanup: ${{ steps.extract_params.outputs.post_deploy_cleanup }}
           description: ${{ steps.extract_params.outputs.description }}
