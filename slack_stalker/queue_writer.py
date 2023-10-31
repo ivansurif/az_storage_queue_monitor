@@ -26,14 +26,3 @@ class QueueWriter:
                 return False, 'ResourceNotFoundError'
         except Exception as e:
             return False, e
-    
-    def create_queue(self):
-        res = self.queue_client.create_queue()
-
-    def write_message(self, message_content):
-        try:
-            message = self.queue_client.send_message(message_content)
-            return message.id
-        except Exception as e:
-            print(f"An unexpected error occurred while sending message: {e}")
-            return None
